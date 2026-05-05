@@ -13,6 +13,12 @@
 # 
 # fabian.woebbeking@iwh-halle.de
 
+# In[ ]:
+
+
+
+
+
 # ## Please follow these rules:
 # 
 # 1. Do NOT change the name of this file.
@@ -32,7 +38,7 @@
 # 
 # ## Example task 1.1: 
 
-# In[1]:
+# In[2]:
 
 
 # example code cell 
@@ -40,7 +46,7 @@ x = 1 + 1/3
 print(x)
 
 
-# In[2]:
+# In[3]:
 
 
 def present_value(C_t, r, t):
@@ -67,7 +73,7 @@ def present_value(C_t, r, t):
 print(present_value(100, 0.03, 10))
 
 
-# In[3]:
+# In[4]:
 
 
 import numpy as np
@@ -83,7 +89,7 @@ plt.title("Present value of 100 paid in 10 years")
 plt.show()
 
 
-# In[4]:
+# In[5]:
 
 
 cash_flows = [10, 10, 110]
@@ -97,7 +103,7 @@ for t, C_t in enumerate(cash_flows, start=1):
 print(total_present_value)
 
 
-# In[5]:
+# In[6]:
 
 
 import pandas as pd
@@ -111,6 +117,60 @@ logreturns = np.log(prices / prices.shift(1))
 print(prices.head())
 print(returns.head())
 print(logreturns.head())
+
+
+# In[7]:
+
+
+dax_returns = returns[".GDAXI"].dropna()
+
+plt.hist(dax_returns, bins=30)
+plt.xlabel("DAX return")
+plt.ylabel("Frequency")
+plt.title("Histogram of DAX returns")
+plt.show()
+
+
+# In[8]:
+
+
+dax_price = prices[".GDAXI"]
+dax_return = returns[".GDAXI"]
+
+fig, ax1 = plt.subplots()
+
+ax1.plot(dax_price.index, dax_price)
+ax1.set_xlabel("Date")
+ax1.set_ylabel("DAX price")
+
+ax2 = ax1.twinx()
+ax2.plot(dax_return.index, dax_return)
+ax2.set_ylabel("DAX return")
+
+plt.title("DAX price and return")
+plt.show()
+
+
+# In[9]:
+
+
+average_returns = returns.mean()
+best_stock = average_returns.drop(".GDAXI").idxmax()
+
+print(best_stock)
+
+
+# In[10]:
+
+
+import seaborn as sns
+
+first_ten_returns = returns.iloc[:, :10]
+correlation_matrix = first_ten_returns.corr()
+
+sns.heatmap(correlation_matrix, annot=True)
+plt.title("Correlation heatmap of the first 10 assets")
+plt.show()
 
 
 # # The End
