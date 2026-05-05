@@ -173,6 +173,52 @@ plt.title("Correlation heatmap of the first 10 assets")
 plt.show()
 
 
+# In[12]:
+
+
+correlation_matrix = returns.corr()
+
+correlation_pairs = correlation_matrix.unstack()
+correlation_pairs = correlation_pairs[correlation_pairs.index.get_level_values(0) != correlation_pairs.index.get_level_values(1)]
+correlation_pairs = correlation_pairs.drop_duplicates()
+
+highest_correlation_pair = correlation_pairs.idxmax()
+lowest_correlation_pair = correlation_pairs.idxmin()
+
+print(highest_correlation_pair)
+print(lowest_correlation_pair)
+
+
+# In[13]:
+
+
+plt.scatter(returns[highest_correlation_pair[0]], returns[highest_correlation_pair[1]])
+plt.xlabel(highest_correlation_pair[0])
+plt.ylabel(highest_correlation_pair[1])
+plt.title("Scatter plot of highest correlation pair")
+plt.show()
+
+plt.scatter(returns[lowest_correlation_pair[0]], returns[lowest_correlation_pair[1]])
+plt.xlabel(lowest_correlation_pair[0])
+plt.ylabel(lowest_correlation_pair[1])
+plt.title("Scatter plot of lowest correlation pair")
+plt.show()
+
+
+# In[ ]:
+
+
+trading_days = 252
+
+annualized_volatility = logreturns.std() * np.sqrt(trading_days)
+annualized_return = logreturns.mean() * trading_days
+sharpe_ratio = annualized_return / annualized_volatility
+
+print(annualized_volatility)
+print(annualized_return)
+print(sharpe_ratio)
+
+
 # # The End
 # 
 # <div style="color: red; font-weight: bold; font-size: 18px">
@@ -185,7 +231,7 @@ plt.show()
 
 # 
 
-# In[ ]:
+# In[11]:
 
 
 # Convert notebook to script
