@@ -205,7 +205,7 @@ plt.title("Scatter plot of lowest correlation pair")
 plt.show()
 
 
-# In[ ]:
+# In[15]:
 
 
 trading_days = 252
@@ -217,6 +217,38 @@ sharpe_ratio = annualized_return / annualized_volatility
 print(annualized_volatility)
 print(annualized_return)
 print(sharpe_ratio)
+
+
+# In[16]:
+
+
+trading_days = 252
+
+annualized_volatility = logreturns.std() * np.sqrt(trading_days)
+annualized_return = logreturns.mean() * trading_days
+sharpe_ratio = annualized_return / annualized_volatility
+
+risk_return_metrics = pd.DataFrame({
+    "annualized_volatility": annualized_volatility,
+    "annualized_return": annualized_return,
+    "sharpe_ratio": sharpe_ratio
+})
+
+print(risk_return_metrics)
+
+
+# In[18]:
+
+
+monthly_prices = prices.resample("ME").last()
+
+bmw_monthly_price = monthly_prices["BMWG.DE"]
+
+plt.plot(bmw_monthly_price.index, bmw_monthly_price)
+plt.xlabel("Date")
+plt.ylabel("BMWG.DE monthly price")
+plt.title("Monthly prices for BMWG.DE")
+plt.show()
 
 
 # # The End
@@ -231,7 +263,7 @@ print(sharpe_ratio)
 
 # 
 
-# In[11]:
+# In[14]:
 
 
 # Convert notebook to script
